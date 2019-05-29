@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ley.innovation.contest.business.dao.InformationDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.ley.innovation.contest.business.entity.Information">
+                <id column="info_id" property="infoId"/>
+                        <result column="info_title" property="infoTitle"/>
+                <result column="info_release_time" property="infoReleaseTime"/>
+                <result column="info_content_path" property="infoContentPath"/>
+                <result column="info_read_count" property="infoReadCount"/>
+                <result column="info_img_big" property="infoImgBig"/>
+                <result column="info_img_small" property="infoImgSmall"/>
+                <result column="info_resource_path" property="infoResourcePath"/>
+                <result column="info_detail" property="infoDetail"/>
+                <result column="event_id" property="eventId"/>
+                <result column="info_type" property="infoType"/>
+            </resultMap>
+
+    <!-- tb_information table all fields -->
+    <sql id="Base_Column_List">
+        info_id, info_title, info_release_time, info_content_path, info_read_count, info_img_big, info_img_small, info_resource_path, info_detail, event_id, info_type
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+                        <if test="infoId != null">
+                and info_id ${infoIdOperator} #{infoId}
+            </if>
+                                    <if test="infoTitle != null">
+                and info_title ${infoTitleOperator} #{infoTitle}
+            </if>
+                                    <if test="infoReleaseTime != null">
+                and info_release_time ${infoReleaseTimeOperator} #{infoReleaseTime}
+            </if>
+                        <if test="infoReleaseTime1 != null">
+                and info_release_time &gt;= #{infoReleaseTime1}
+            </if>
+            <if test="infoReleaseTime2 != null">
+                and info_release_time &lt;= #{infoReleaseTime2}
+            </if>
+                                    <if test="infoContentPath != null">
+                and info_content_path ${infoContentPathOperator} #{infoContentPath}
+            </if>
+                                    <if test="infoReadCount != null">
+                and info_read_count ${infoReadCountOperator} #{infoReadCount}
+            </if>
+                                    <if test="infoImgBig != null">
+                and info_img_big ${infoImgBigOperator} #{infoImgBig}
+            </if>
+                                    <if test="infoImgSmall != null">
+                and info_img_small ${infoImgSmallOperator} #{infoImgSmall}
+            </if>
+                                    <if test="infoResourcePath != null">
+                and info_resource_path ${infoResourcePathOperator} #{infoResourcePath}
+            </if>
+                                    <if test="infoDetail != null">
+                and info_detail ${infoDetailOperator} #{infoDetail}
+            </if>
+                                    <if test="eventId != null">
+                and event_id ${eventIdOperator} #{eventId}
+            </if>
+                                    <if test="infoType != null">
+                and info_type ${infoTypeOperator} #{infoType}
+            </if>
+                                </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.ley.innovation.contest.business.entity.Information">
+        insert into tb_information(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{infoId, jdbcType=VARCHAR}, #{infoTitle, jdbcType=VARCHAR}, #{infoReleaseTime, jdbcType=TIMESTAMP}, #{infoContentPath, jdbcType=VARCHAR}, #{infoReadCount, jdbcType=INTEGER}, #{infoImgBig, jdbcType=VARCHAR}, #{infoImgSmall, jdbcType=VARCHAR}, #{infoResourcePath, jdbcType=VARCHAR}, #{infoDetail, jdbcType=VARCHAR}, #{eventId, jdbcType=VARCHAR}, #{infoType, jdbcType=INTEGER})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.ley.innovation.contest.business.entity.Information">
+        insert into tb_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                        <if test="infoId != null">info_id,</if>
+                        <if test="infoTitle != null">info_title,</if>
+                        <if test="infoReleaseTime != null">info_release_time,</if>
+                        <if test="infoContentPath != null">info_content_path,</if>
+                        <if test="infoReadCount != null">info_read_count,</if>
+                        <if test="infoImgBig != null">info_img_big,</if>
+                        <if test="infoImgSmall != null">info_img_small,</if>
+                        <if test="infoResourcePath != null">info_resource_path,</if>
+                        <if test="infoDetail != null">info_detail,</if>
+                        <if test="eventId != null">event_id,</if>
+                        <if test="infoType != null">info_type,</if>
+                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                        <if test="infoId != null">#{infoId, jdbcType=VARCHAR},</if>
+                        <if test="infoTitle != null">#{infoTitle, jdbcType=VARCHAR},</if>
+                        <if test="infoReleaseTime != null">#{infoReleaseTime, jdbcType=TIMESTAMP},</if>
+                        <if test="infoContentPath != null">#{infoContentPath, jdbcType=VARCHAR},</if>
+                        <if test="infoReadCount != null">#{infoReadCount, jdbcType=INTEGER},</if>
+                        <if test="infoImgBig != null">#{infoImgBig, jdbcType=VARCHAR},</if>
+                        <if test="infoImgSmall != null">#{infoImgSmall, jdbcType=VARCHAR},</if>
+                        <if test="infoResourcePath != null">#{infoResourcePath, jdbcType=VARCHAR},</if>
+                        <if test="infoDetail != null">#{infoDetail, jdbcType=VARCHAR},</if>
+                        <if test="eventId != null">#{eventId, jdbcType=VARCHAR},</if>
+                        <if test="infoType != null">#{infoType, jdbcType=INTEGER},</if>
+                    </trim>
+    </insert>
+
+        <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.ley.innovation.contest.business.entity.Information">
+        update tb_information
+                set  info_title = #{infoTitle},
+                          info_release_time = #{infoReleaseTime},
+                          info_content_path = #{infoContentPath},
+                          info_read_count = #{infoReadCount},
+                          info_img_big = #{infoImgBig},
+                          info_img_small = #{infoImgSmall},
+                          info_resource_path = #{infoResourcePath},
+                          info_detail = #{infoDetail},
+                          event_id = #{eventId},
+                          info_type = #{infoType}        
+                where  info_id = #{infoId}
+        
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ley.innovation.contest.business.entity.Information">
+        update tb_information
+        <set>
+                        <if test="infoTitle != null">
+            info_title = #{infoTitle},
+            </if>
+                        <if test="infoReleaseTime != null">
+            info_release_time = #{infoReleaseTime},
+            </if>
+                        <if test="infoContentPath != null">
+            info_content_path = #{infoContentPath},
+            </if>
+                        <if test="infoReadCount != null">
+            info_read_count = #{infoReadCount},
+            </if>
+                        <if test="infoImgBig != null">
+            info_img_big = #{infoImgBig},
+            </if>
+                        <if test="infoImgSmall != null">
+            info_img_small = #{infoImgSmall},
+            </if>
+                        <if test="infoResourcePath != null">
+            info_resource_path = #{infoResourcePath},
+            </if>
+                        <if test="infoDetail != null">
+            info_detail = #{infoDetail},
+            </if>
+                        <if test="eventId != null">
+            event_id = #{eventId},
+            </if>
+                        <if test="infoType != null">
+            info_type = #{infoType},
+            </if>
+                    </set>
+                where info_id = #{infoId}
+        
+    </update>
+
+    <!-- 根据id查询 tb_information -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_information
+                where info_id = #{value}
+        
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.String">
+        delete from tb_information
+                where info_id = #{value}
+        
+    </delete>
+
+    
+    <!-- tb_information 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.ley.springboot.base.page.BasePage">
+        select count(1) from tb_information
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tb_information分页列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_information
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+        ${pager.orderCondition}
+        </if>
+        limit ${pager.pageOffset},${pageSize}
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_information
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+        ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ley.innovation.contest.business.dao.CarouselDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.ley.innovation.contest.business.entity.Carousel">
+        <id column="carousel_id" property="carouselId"/>
+        <result column="carousel_path" property="carouselPath"/>
+        <result column="carousel_link" property="carouselLink"/>
+        <result column="carousel_order" property="carouselOrder"/>
+        <result column="event_id" property="eventId"/>
+    </resultMap>
+
+    <!-- tb_carousel table all fields -->
+    <sql id="Base_Column_List">
+        carousel_id, carousel_path, carousel_link, carousel_order, event_id
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="carouselId != null">
+                and carousel_id ${carouselIdOperator} #{carouselId}
+            </if>
+            <if test="carouselPath != null">
+                and carousel_path ${carouselPathOperator} #{carouselPath}
+            </if>
+            <if test="carouselLink != null">
+                and carousel_link ${carouselLinkOperator} #{carouselLink}
+            </if>
+            <if test="carouselOrder != null">
+                and carousel_order ${carouselOrderOperator} #{carouselOrder}
+            </if>
+            <if test="eventId != null">
+                and event_id ${eventIdOperator} #{eventId}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.ley.innovation.contest.business.entity.Carousel">
+        insert into tb_carousel(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{carouselId, jdbcType=VARCHAR}, #{carouselPath, jdbcType=VARCHAR}, #{carouselLink, jdbcType=VARCHAR},
+        #{carouselOrder, jdbcType=VARCHAR}, #{eventId, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.ley.innovation.contest.business.entity.Carousel">
+        insert into tb_carousel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="carouselId != null">carousel_id,</if>
+            <if test="carouselPath != null">carousel_path,</if>
+            <if test="carouselLink != null">carousel_link,</if>
+            <if test="carouselOrder != null">carousel_order,</if>
+            <if test="eventId != null">event_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="carouselId != null">#{carouselId, jdbcType=VARCHAR},</if>
+            <if test="carouselPath != null">#{carouselPath, jdbcType=VARCHAR},</if>
+            <if test="carouselLink != null">#{carouselLink, jdbcType=VARCHAR},</if>
+            <if test="carouselOrder != null">#{carouselOrder, jdbcType=VARCHAR},</if>
+            <if test="eventId != null">#{eventId, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.ley.innovation.contest.business.entity.Carousel">
+        update tb_carousel
+                set  carousel_path = #{carouselPath},
+                          carousel_link = #{carouselLink},
+                          carousel_order = #{carouselOrder},
+                          event_id = #{eventId}        
+                where  carousel_id = #{carouselId}
+        
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ley.innovation.contest.business.entity.Carousel">
+        update tb_carousel
+        <set>
+            <if test="carouselPath != null">
+                carousel_path = #{carouselPath},
+            </if>
+            <if test="carouselLink != null">
+                carousel_link = #{carouselLink},
+            </if>
+            <if test="carouselOrder != null">
+                carousel_order = #{carouselOrder},
+            </if>
+            <if test="eventId != null">
+                event_id = #{eventId},
+            </if>
+        </set>
+        where carousel_id = #{carouselId}
+
+    </update>
+
+    <!-- 根据id查询 tb_carousel -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_carousel
+        where carousel_id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.String">
+        delete from tb_carousel
+                where carousel_id = #{value}
+        
+    </delete>
+
+
+    <!-- tb_carousel 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.ley.springboot.base.page.BasePage">
+        select count(1) from tb_carousel
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tb_carousel分页列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_carousel
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.pageOffset},${pageSize}
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_carousel
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

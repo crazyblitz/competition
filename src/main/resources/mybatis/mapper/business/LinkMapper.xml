@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ley.innovation.contest.business.dao.LinkDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.ley.innovation.contest.business.entity.Link">
+        <id column="link_id" property="linkId"/>
+        <result column="link_name" property="linkName"/>
+        <result column="link_phone" property="linkPhone"/>
+        <result column="link_telphone" property="linkTelphone"/>
+        <result column="link_email" property="linkEmail"/>
+        <result column="link_address" property="linkAddress"/>
+        <result column="link_postal_code" property="linkPostalCode"/>
+        <result column="link_fax" property="linkFax"/>
+    </resultMap>
+
+    <!-- tb_link table all fields -->
+    <sql id="Base_Column_List">
+        link_id, link_name, link_phone, link_telphone, link_email, link_address, link_postal_code, link_fax
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="linkId != null">
+                and link_id ${linkIdOperator} #{linkId}
+            </if>
+            <if test="linkName != null">
+                and link_name ${linkNameOperator} #{linkName}
+            </if>
+            <if test="linkPhone != null">
+                and link_phone ${linkPhoneOperator} #{linkPhone}
+            </if>
+            <if test="linkTelphone != null">
+                and link_telphone ${linkTelphoneOperator} #{linkTelphone}
+            </if>
+            <if test="linkEmail != null">
+                and link_email ${linkEmailOperator} #{linkEmail}
+            </if>
+            <if test="linkAddress != null">
+                and link_address ${linkAddressOperator} #{linkAddress}
+            </if>
+            <if test="linkPostalCode != null">
+                and link_postal_code ${linkPostalCodeOperator} #{linkPostalCode}
+            </if>
+            <if test="linkFax != null">
+                and link_fax ${linkFaxOperator} #{linkFax}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.ley.innovation.contest.business.entity.Link">
+        insert into tb_link(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{linkId, jdbcType=VARCHAR}, #{linkName, jdbcType=VARCHAR}, #{linkPhone, jdbcType=VARCHAR},
+        #{linkTelphone, jdbcType=VARCHAR}, #{linkEmail, jdbcType=VARCHAR}, #{linkAddress, jdbcType=VARCHAR},
+        #{linkPostalCode, jdbcType=VARCHAR}, #{linkFax, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.ley.innovation.contest.business.entity.Link">
+        insert into tb_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="linkId != null">link_id,</if>
+            <if test="linkName != null">link_name,</if>
+            <if test="linkPhone != null">link_phone,</if>
+            <if test="linkTelphone != null">link_telphone,</if>
+            <if test="linkEmail != null">link_email,</if>
+            <if test="linkAddress != null">link_address,</if>
+            <if test="linkPostalCode != null">link_postal_code,</if>
+            <if test="linkFax != null">link_fax,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="linkId != null">#{linkId, jdbcType=VARCHAR},</if>
+            <if test="linkName != null">#{linkName, jdbcType=VARCHAR},</if>
+            <if test="linkPhone != null">#{linkPhone, jdbcType=VARCHAR},</if>
+            <if test="linkTelphone != null">#{linkTelphone, jdbcType=VARCHAR},</if>
+            <if test="linkEmail != null">#{linkEmail, jdbcType=VARCHAR},</if>
+            <if test="linkAddress != null">#{linkAddress, jdbcType=VARCHAR},</if>
+            <if test="linkPostalCode != null">#{linkPostalCode, jdbcType=VARCHAR},</if>
+            <if test="linkFax != null">#{linkFax, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.ley.innovation.contest.business.entity.Link">
+        UPDATE tb_link
+        SET link_name        = #{linkName},
+            link_phone       = #{linkPhone},
+            link_telphone    = #{linkTelphone},
+            link_email       = #{linkEmail},
+            link_address     = #{linkAddress},
+            link_postal_code = #{linkPostalCode},
+            link_fax         = #{linkFax}
+        WHERE link_id = #{linkId}
+
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ley.innovation.contest.business.entity.Link">
+        update tb_link
+        <set>
+            <if test="linkName != null">
+                link_name = #{linkName},
+            </if>
+            <if test="linkPhone != null">
+                link_phone = #{linkPhone},
+            </if>
+            <if test="linkTelphone != null">
+                link_telphone = #{linkTelphone},
+            </if>
+            <if test="linkEmail != null">
+                link_email = #{linkEmail},
+            </if>
+            <if test="linkAddress != null">
+                link_address = #{linkAddress},
+            </if>
+            <if test="linkPostalCode != null">
+                link_postal_code = #{linkPostalCode},
+            </if>
+            <if test="linkFax != null">
+                link_fax = #{linkFax},
+            </if>
+        </set>
+        where link_id = #{linkId}
+
+    </update>
+
+    <!-- 根据id查询 tb_link -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_link
+        where link_id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.String">
+        DELETE FROM tb_link
+        WHERE link_id = #{value}
+
+    </delete>
+
+
+    <!-- tb_link 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.ley.springboot.base.page.BasePage">
+        select count(1) from tb_link
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tb_link分页列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_link
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.pageOffset},${pageSize}
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_link
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

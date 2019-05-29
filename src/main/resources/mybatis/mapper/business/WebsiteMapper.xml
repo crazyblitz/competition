@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ley.innovation.contest.business.dao.WebsiteDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.ley.innovation.contest.business.entity.Website">
+        <id column="website_id" property="websiteId"/>
+        <result column="website_bk_img2" property="websiteBkImg2"/>
+        <result column="config_type" property="configType"/>
+        <result column="event_synopsis_desc1" property="eventSynopsisDesc1"/>
+        <result column="event_synopsis_desc2" property="eventSynopsisDesc2"/>
+        <result column="process_desc" property="processDesc"/>
+        <result column="organizer" property="organizer"/>
+        <result column="host_unit" property="hostUnit"/>
+        <result column="committee" property="committee"/>
+        <result column="event_synopsis_bk_img" property="eventSynopsisBkImg"/>
+        <result column="website_title" property="websiteTitle"/>
+        <result column="website_logo" property="websiteLogo"/>
+        <result column="website_weixin_img" property="websiteWeixinImg"/>
+    </resultMap>
+
+    <!-- tb_website table all fields -->
+    <sql id="Base_Column_List">
+        website_id, website_bk_img2, config_type, event_synopsis_desc1, event_synopsis_desc2, process_desc, organizer, host_unit, committee, event_synopsis_bk_img, website_title, website_logo, website_weixin_img
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="websiteId != null">
+                and website_id ${websiteIdOperator} #{websiteId}
+            </if>
+            <if test="websiteBkImg2 != null">
+                and website_bk_img2 ${websiteBkImg2Operator} #{websiteBkImg2}
+            </if>
+            <if test="configType != null">
+                and config_type ${configTypeOperator} #{configType}
+            </if>
+            <if test="eventSynopsisDesc1 != null">
+                and event_synopsis_desc1 ${eventSynopsisDesc1Operator} #{eventSynopsisDesc1}
+            </if>
+            <if test="eventSynopsisDesc2 != null">
+                and event_synopsis_desc2 ${eventSynopsisDesc2Operator} #{eventSynopsisDesc2}
+            </if>
+            <if test="processDesc != null">
+                and process_desc ${processDescOperator} #{processDesc}
+            </if>
+            <if test="organizer != null">
+                and organizer ${organizerOperator} #{organizer}
+            </if>
+            <if test="hostUnit != null">
+                and host_unit ${hostUnitOperator} #{hostUnit}
+            </if>
+            <if test="committee != null">
+                and committee ${committeeOperator} #{committee}
+            </if>
+            <if test="eventSynopsisBkImg != null">
+                and event_synopsis_bk_img ${eventSynopsisBkImgOperator} #{eventSynopsisBkImg}
+            </if>
+            <if test="websiteTitle != null">
+                and website_title ${websiteTitleOperator} #{websiteTitle}
+            </if>
+            <if test="websiteLogo != null">
+                and website_logo ${websiteLogoOperator} #{websiteLogo}
+            </if>
+            <if test="websiteWeixinImg != null">
+                and website_weixin_img ${websiteWeixinImgOperator} #{websiteWeixinImg}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.ley.innovation.contest.business.entity.Website">
+        insert into tb_website(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{websiteId, jdbcType=VARCHAR}, #{websiteBkImg2, jdbcType=VARCHAR}, #{configType, jdbcType=INTEGER},
+        #{eventSynopsisDesc1, jdbcType=VARCHAR}, #{eventSynopsisDesc2, jdbcType=VARCHAR},
+        #{processDesc, jdbcType=VARCHAR}, #{organizer, jdbcType=VARCHAR}, #{hostUnit, jdbcType=VARCHAR},
+        #{committee, jdbcType=VARCHAR}, #{eventSynopsisBkImg, jdbcType=VARCHAR}, #{websiteTitle, jdbcType=VARCHAR},
+        #{websiteLogo, jdbcType=VARCHAR}, #{websiteWeixinImg, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.ley.innovation.contest.business.entity.Website">
+        insert into tb_website
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="websiteId != null">website_id,</if>
+            <if test="websiteBkImg2 != null">website_bk_img2,</if>
+            <if test="configType != null">config_type,</if>
+            <if test="eventSynopsisDesc1 != null">event_synopsis_desc1,</if>
+            <if test="eventSynopsisDesc2 != null">event_synopsis_desc2,</if>
+            <if test="processDesc != null">process_desc,</if>
+            <if test="organizer != null">organizer,</if>
+            <if test="hostUnit != null">host_unit,</if>
+            <if test="committee != null">committee,</if>
+            <if test="eventSynopsisBkImg != null">event_synopsis_bk_img,</if>
+            <if test="websiteTitle != null">website_title,</if>
+            <if test="websiteLogo != null">website_logo,</if>
+            <if test="websiteWeixinImg != null">website_weixin_img,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="websiteId != null">#{websiteId, jdbcType=VARCHAR},</if>
+            <if test="websiteBkImg2 != null">#{websiteBkImg2, jdbcType=VARCHAR},</if>
+            <if test="configType != null">#{configType, jdbcType=INTEGER},</if>
+            <if test="eventSynopsisDesc1 != null">#{eventSynopsisDesc1, jdbcType=VARCHAR},</if>
+            <if test="eventSynopsisDesc2 != null">#{eventSynopsisDesc2, jdbcType=VARCHAR},</if>
+            <if test="processDesc != null">#{processDesc, jdbcType=VARCHAR},</if>
+            <if test="organizer != null">#{organizer, jdbcType=VARCHAR},</if>
+            <if test="hostUnit != null">#{hostUnit, jdbcType=VARCHAR},</if>
+            <if test="committee != null">#{committee, jdbcType=VARCHAR},</if>
+            <if test="eventSynopsisBkImg != null">#{eventSynopsisBkImg, jdbcType=VARCHAR},</if>
+            <if test="websiteTitle != null">#{websiteTitle, jdbcType=VARCHAR},</if>
+            <if test="websiteLogo != null">#{websiteLogo, jdbcType=VARCHAR},</if>
+            <if test="websiteWeixinImg != null">#{websiteWeixinImg, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.ley.innovation.contest.business.entity.Website">
+        UPDATE tb_website
+        SET website_bk_img2       = #{websiteBkImg2},
+            config_type           = #{configType},
+            event_synopsis_desc1  = #{eventSynopsisDesc1},
+            event_synopsis_desc2  = #{eventSynopsisDesc2},
+            process_desc          = #{processDesc},
+            organizer             = #{organizer},
+            host_unit             = #{hostUnit},
+            committee             = #{committee},
+            event_synopsis_bk_img = #{eventSynopsisBkImg},
+            website_title         = #{websiteTitle},
+            website_logo          = #{websiteLogo},
+            website_weixin_img    = #{websiteWeixinImg}
+        WHERE website_id = #{websiteId}
+
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ley.innovation.contest.business.entity.Website">
+        update tb_website
+        <set>
+            <if test="websiteBkImg2 != null">
+                website_bk_img2 = #{websiteBkImg2},
+            </if>
+            <if test="configType != null">
+                config_type = #{configType},
+            </if>
+            <if test="eventSynopsisDesc1 != null">
+                event_synopsis_desc1 = #{eventSynopsisDesc1},
+            </if>
+            <if test="eventSynopsisDesc2 != null">
+                event_synopsis_desc2 = #{eventSynopsisDesc2},
+            </if>
+            <if test="processDesc != null">
+                process_desc = #{processDesc},
+            </if>
+            <if test="organizer != null">
+                organizer = #{organizer},
+            </if>
+            <if test="hostUnit != null">
+                host_unit = #{hostUnit},
+            </if>
+            <if test="committee != null">
+                committee = #{committee},
+            </if>
+            <if test="eventSynopsisBkImg != null">
+                event_synopsis_bk_img = #{eventSynopsisBkImg},
+            </if>
+            <if test="websiteTitle != null">
+                website_title = #{websiteTitle},
+            </if>
+            <if test="websiteLogo != null">
+                website_logo = #{websiteLogo},
+            </if>
+            <if test="websiteWeixinImg != null">
+                website_weixin_img = #{websiteWeixinImg},
+            </if>
+        </set>
+        where website_id = #{websiteId}
+
+    </update>
+
+    <!-- 根据id查询 tb_website -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_website
+        where website_id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.String">
+        DELETE FROM tb_website
+        WHERE website_id = #{value}
+
+    </delete>
+
+
+    <!-- tb_website 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.ley.springboot.base.page.BasePage">
+        select count(1) from tb_website
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tb_website分页列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_website
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.pageOffset},${pageSize}
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_website
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

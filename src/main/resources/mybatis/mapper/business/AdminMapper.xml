@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ley.innovation.contest.business.dao.AdminDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.ley.innovation.contest.business.entity.Admin">
+        <id column="admin_id" property="adminId"/>
+        <result column="admin_name" property="adminName"/>
+        <result column="admin_password" property="adminPassword"/>
+        <result column="encrypt_key" property="encryptKey"/>
+        <result column="is_admin_super" property="isAdminSuper"/>
+    </resultMap>
+
+    <!-- tb_admin table all fields -->
+    <sql id="Base_Column_List">
+        admin_id, admin_name, admin_password, encrypt_key, is_admin_super
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="adminId != null">
+                and admin_id ${adminIdOperator} #{adminId}
+            </if>
+            <if test="adminName != null">
+                and admin_name ${adminNameOperator} #{adminName}
+            </if>
+            <if test="adminPassword != null">
+                and admin_password ${adminPasswordOperator} #{adminPassword}
+            </if>
+            <if test="encryptKey != null">
+                and encrypt_key ${encryptKeyOperator} #{encryptKey}
+            </if>
+            <if test="isAdminSuper != null">
+                and is_admin_super ${isAdminSuperOperator} #{isAdminSuper}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.ley.innovation.contest.business.entity.Admin">
+        insert into tb_admin(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{adminId, jdbcType=VARCHAR}, #{adminName, jdbcType=VARCHAR}, #{adminPassword, jdbcType=VARCHAR},
+        #{encryptKey, jdbcType=VARCHAR}, #{isAdminSuper, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.ley.innovation.contest.business.entity.Admin">
+        insert into tb_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">admin_id,</if>
+            <if test="adminName != null">admin_name,</if>
+            <if test="adminPassword != null">admin_password,</if>
+            <if test="encryptKey != null">encrypt_key,</if>
+            <if test="isAdminSuper != null">is_admin_super,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">#{adminId, jdbcType=VARCHAR},</if>
+            <if test="adminName != null">#{adminName, jdbcType=VARCHAR},</if>
+            <if test="adminPassword != null">#{adminPassword, jdbcType=VARCHAR},</if>
+            <if test="encryptKey != null">#{encryptKey, jdbcType=VARCHAR},</if>
+            <if test="isAdminSuper != null">#{isAdminSuper, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.ley.innovation.contest.business.entity.Admin">
+        update tb_admin
+                set  admin_name = #{adminName},
+                          admin_password = #{adminPassword},
+                          encrypt_key = #{encryptKey},
+                          is_admin_super = #{isAdminSuper}        
+                where  admin_id = #{adminId}
+        
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ley.innovation.contest.business.entity.Admin">
+        update tb_admin
+        <set>
+            <if test="adminName != null">
+                admin_name = #{adminName},
+            </if>
+            <if test="adminPassword != null">
+                admin_password = #{adminPassword},
+            </if>
+            <if test="encryptKey != null">
+                encrypt_key = #{encryptKey},
+            </if>
+            <if test="isAdminSuper != null">
+                is_admin_super = #{isAdminSuper},
+            </if>
+        </set>
+        where admin_id = #{adminId}
+
+    </update>
+
+    <!-- 根据id查询 tb_admin -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_admin
+        where admin_id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.String">
+        delete from tb_admin
+                where admin_id = #{value}
+        
+    </delete>
+
+
+    <!-- tb_admin 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.ley.springboot.base.page.BasePage">
+        select count(1) from tb_admin
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tb_admin分页列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_admin
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.pageOffset},${pageSize}
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_admin
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

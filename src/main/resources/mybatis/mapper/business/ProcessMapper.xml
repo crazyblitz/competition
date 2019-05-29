@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ley.innovation.contest.business.dao.ProcessDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.ley.innovation.contest.business.entity.Process">
+        <id column="process_id" property="processId"/>
+        <result column="process_time" property="processTime"/>
+        <result column="process_enable" property="processEnable"/>
+        <result column="process_order" property="processOrder"/>
+        <result column="process_stage" property="processStage"/>
+        <result column="process_desc" property="processDesc"/>
+        <result column="process_title" property="processTitle"/>
+    </resultMap>
+
+    <!-- tb_process table all fields -->
+    <sql id="Base_Column_List">
+        process_id, process_time, process_enable, process_order, process_stage, process_desc, process_title
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="processId != null">
+                and process_id ${processIdOperator} #{processId}
+            </if>
+            <if test="processTime != null">
+                and process_time ${processTimeOperator} #{processTime}
+            </if>
+            <if test="processTime1 != null">
+                and process_time &gt;= #{processTime1}
+            </if>
+            <if test="processTime2 != null">
+                and process_time &lt;= #{processTime2}
+            </if>
+            <if test="processEnable != null">
+                and process_enable ${processEnableOperator} #{processEnable}
+            </if>
+            <if test="processOrder != null">
+                and process_order ${processOrderOperator} #{processOrder}
+            </if>
+            <if test="processStage != null">
+                and process_stage ${processStageOperator} #{processStage}
+            </if>
+            <if test="processDesc != null">
+                and process_desc ${processDescOperator} #{processDesc}
+            </if>
+            <if test="processTitle != null">
+                and process_title ${processTitleOperator} #{processTitle}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.ley.innovation.contest.business.entity.Process">
+        insert into tb_process(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{processId, jdbcType=VARCHAR}, #{processTime, jdbcType=TIMESTAMP}, #{processEnable, jdbcType=VARCHAR},
+        #{processOrder, jdbcType=INTEGER}, #{processStage, jdbcType=VARCHAR}, #{processDesc, jdbcType=VARCHAR},
+        #{processTitle, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.ley.innovation.contest.business.entity.Process">
+        insert into tb_process
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="processId != null">process_id,</if>
+            <if test="processTime != null">process_time,</if>
+            <if test="processEnable != null">process_enable,</if>
+            <if test="processOrder != null">process_order,</if>
+            <if test="processStage != null">process_stage,</if>
+            <if test="processDesc != null">process_desc,</if>
+            <if test="processTitle != null">process_title,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="processId != null">#{processId, jdbcType=VARCHAR},</if>
+            <if test="processTime != null">#{processTime, jdbcType=TIMESTAMP},</if>
+            <if test="processEnable != null">#{processEnable, jdbcType=VARCHAR},</if>
+            <if test="processOrder != null">#{processOrder, jdbcType=INTEGER},</if>
+            <if test="processStage != null">#{processStage, jdbcType=VARCHAR},</if>
+            <if test="processDesc != null">#{processDesc, jdbcType=VARCHAR},</if>
+            <if test="processTitle != null">#{processTitle, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.ley.innovation.contest.business.entity.Process">
+        update tb_process
+                set  process_time = #{processTime},
+                          process_enable = #{processEnable},
+                          process_order = #{processOrder},
+                          process_stage = #{processStage},
+                          process_desc = #{processDesc},
+                          process_title = #{processTitle}        
+                where  process_id = #{processId}
+        
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ley.innovation.contest.business.entity.Process">
+        update tb_process
+        <set>
+            <if test="processTime != null">
+                process_time = #{processTime},
+            </if>
+            <if test="processEnable != null">
+                process_enable = #{processEnable},
+            </if>
+            <if test="processOrder != null">
+                process_order = #{processOrder},
+            </if>
+            <if test="processStage != null">
+                process_stage = #{processStage},
+            </if>
+            <if test="processDesc != null">
+                process_desc = #{processDesc},
+            </if>
+            <if test="processTitle != null">
+                process_title = #{processTitle},
+            </if>
+        </set>
+        where process_id = #{processId}
+
+    </update>
+
+    <!-- 根据id查询 tb_process -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_process
+        where process_id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.String">
+        delete from tb_process
+                where process_id = #{value}
+        
+    </delete>
+
+
+    <!-- tb_process 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.ley.springboot.base.page.BasePage">
+        select count(1) from tb_process
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tb_process分页列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_process
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.pageOffset},${pageSize}
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.ley.springboot.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_process
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>
